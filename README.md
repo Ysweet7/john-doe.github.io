@@ -1,4 +1,3 @@
-@ -0,0 +1,171 @@
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,6 +40,7 @@
         }
         .correct { color: green; }
         .incorrect { color: red; }
+        .rating { font-weight: bold; }
     </style>
 </head>
 <body>
@@ -102,18 +102,17 @@
     <div id="result"></div>
 
     <script>
-        // 标准答案及知识点映射
         const answers = {
-            q1: "1.2",          // 并联公式：1/R = 1/2 + 1/3
-            q2: "11.43",        // U = E - Ir = 12 - (12/(5+0.5))*0.5 ≈ 11.43V
-            q3: "5",            // ε = LΔI/Δt = 0.5*(2/0.2) = 5V
-            q4: "10.38",        // Z = √(R² + (2πfL)^2) = √(3² + (2π*50*0.1)^2) ≈ 10.38Ω
-            q5: "9",            // (6||6)=3Ω + 6Ω = 9Ω
-            q6: "电位差方向",  // 负号表示实际方向与参考方向相反
-            q7: "5",            // 电感串联相加
-            q8: "5040/π",       // f = 1/(2π√(LC)) = 10^4/(2π√(10×1)) = 5000/π ≈ 1592Hz
-            q9: "0.38",         // R=U/I=1000Ω，I'=380/1000=0.38A
-            q10: "电流平方"     // W = ½LI²
+            q1: "1.2",          
+            q2: "11.43",        
+            q3: "5",            
+            q4: "10.38",        
+            q5: "9",            
+            q6: "电位差方向",  
+            q7: "5",            
+            q8: "5040/π",       
+            q9: "0.38",         
+            q10: "电流平方"     
         };
 
         const topics = {
@@ -139,7 +138,6 @@
                 const userAns = document.getElementById(qid).value.trim();
                 const correctAns = answers[qid];
 
-                // 宽容度处理（允许小数误差）
                 const isNumeric = !isNaN(parseFloat(userAns));
                 let isCorrect = false;
 
@@ -159,6 +157,7 @@
             }
 
             resultText += `<h4>得分：${score}/10</h4>`;
+            resultText += `<p class="rating">${getRating(score)}</p>`;
             if (feedback.length > 0) {
                 resultText += feedback.join("<br>");
             } else {
@@ -166,6 +165,16 @@
             }
 
             document.getElementById('result').innerHTML = resultText;
+        }
+
+        function getRating(score) {
+            if (score >= 9) {
+                return "🌟 优：你对电路基础掌握得非常扎实！继续保持！";
+            } else if (score >= 6) {
+                return "👍 良：大多数知识点掌握不错，但仍有提升空间。";
+            } else {
+                return "⚠️ 差：建议从基础开始系统学习，多做练习题。";
+            }
         }
     </script>
 </body>
